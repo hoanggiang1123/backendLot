@@ -1,0 +1,1 @@
+const Area = require('../schemas/area')
