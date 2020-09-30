@@ -83,3 +83,18 @@ exports.get_signout = (req, res) => {
         msg: "Logout Successfull"
     })
 }
+
+exports.get_listuser = (req, res) => {
+    User.find({}).select('_id name email role avatar').limit(10).exec((err, users) => {
+        if (users && !err) {
+            return res.json({
+                status: 1,
+                users
+            })
+        }
+        return res.status(400).json({
+            status: 0,
+            err
+        })
+    })
+}
