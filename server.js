@@ -19,6 +19,7 @@ mongoose
       console.log(err);
     });
 
+global.rootPath = __dirname
 
 io.on('connection', (socket) => {
   console.log('socketId', socket.id)
@@ -29,10 +30,11 @@ const corOpts = {
 }
 
 app.use(cors(corOpts))
-
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(morgan('dev'))
+app.use(express.static('public'))
 
 app.use(function(req, res, next) {
   req.io = io;

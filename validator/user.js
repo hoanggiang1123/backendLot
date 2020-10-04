@@ -19,3 +19,7 @@ exports.userSignInValidation = [
       .isLength({ min: 6 })
       .withMessage('Password must be at least 6 characters long')
 ];
+
+exports.userEditIfo = [
+  check('name').notEmpty().isLength({ min: 6 }).withMessage('name must be at least 6 characters')
+]

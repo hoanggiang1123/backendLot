@@ -13,7 +13,6 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     trim: true,
-    required: true,
     max: 32
   },
   email: {
@@ -34,6 +33,14 @@ const userSchema = new mongoose.Schema({
     default: 0
   },
   avatar: {
+    type: String,
+    default: ''
+  },
+  status: {
+    type: String,
+    default: 'active'
+  },
+  phone: {
     type: String,
     default: ''
   },
@@ -73,6 +80,9 @@ userSchema.methods = {
   },
   makeSalt: function() {
     return Math.round(new Date().valueOf() * Math.random()) + '';
+  },
+  updatePassword: function (password) {
+    this.hassed_password = this.encryptPassword(password)
   }
 }
 module.exports = mongoose.model('User', userSchema);
