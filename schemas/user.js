@@ -27,7 +27,10 @@ const userSchema = new mongoose.Schema({
     required: true
   },
   salt: String,
-  about: String,
+  about: {
+    type: String,
+    default: ''
+  },
   role: {
     type: Number,
     default: 0

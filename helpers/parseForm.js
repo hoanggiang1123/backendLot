@@ -44,7 +44,7 @@ exports.parseForm = (req, res, next) => {
 
         fields.filename = filename
         req.body = fields
-
+        console.log(req.body)
         next()
         
     })

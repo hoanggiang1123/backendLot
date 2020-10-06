@@ -100,14 +100,14 @@ exports.get_listuser = (req, res) => {
 }
 
 exports.post_edituserinfo = (req, res) => {
-    const { name, phone, about, filename, userId } = req.body
+    const { name, phone, about, filename, id } = req.body
     let updateFiled = { name, phone, about }
 
     if(filename !== '') {
         updateFiled.avatar = filename
     }
 
-    User.findOneAndUpdate({ _id: userId }, updateFiled, { new: true }).exec((err, user) => {
+    User.findOneAndUpdate({ _id: id }, updateFiled, { new: true }).exec((err, user) => {
         if (!err && user) {
             const { _id, username, name, phone, about, email, avatar, role, status } = user
             return res.status(200).json({
@@ -157,8 +157,8 @@ exports.post_changestatus = (req, res) => {
 }
 
 exports.post_changepassword = (req, res) => {
-    const { userId, password, newPassword } = req.body
-    User.findOne({ _id: userId }).exec((err, user) => {
+    const { id, password, newPassword } = req.body
+    User.findOne({ _id: id }).exec((err, user) => {
         if (err && !user) {
             return res.status(400).json({
                 error: err
@@ -183,4 +183,22 @@ exports.post_changepassword = (req, res) => {
                 })
             })
     })
+}
+
+exports.post_changerolestatus = (req, res) => {
+    const { userId, role, status } = req.body
+    User.findOneAndUpdate({ _id: userId }, { role, status }, { new: true })
+        .exec((err, newuser) => {
+            if(err && !newuser) {
+                return res.status(400).json({
+                    error: 'User not exist'
+                })
+            }
+            const { _id, role, status } = newuser
+
+            return res.status(200).json({
+                status: 1,
+                user: { _id, role, status }
+            })
+        })
 }
